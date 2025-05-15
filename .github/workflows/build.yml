@@ -17,9 +17,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
-
-    - name: Install Dependencies
+        python-version: '3.9'    - name: Install Dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y \
@@ -38,7 +36,12 @@ jobs:
           libavformat-dev \
           libavcodec-dev \
           zlib1g-dev \
-          android-tools-adb
+          android-tools-adb \
+          openjdk-11-jdk \
+          autoconf \
+          libtool \
+          pkg-config \
+          ccache
 
     - name: Install Buildozer
       run: |
