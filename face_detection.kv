@@ -1,0 +1,214 @@
+# Define the layout and styling for our Android app
+<MenuScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        
+        MDTopAppBar:
+            title: "Face Detection System"
+            right_action_items: [["theme-light-dark", lambda x: app.toggle_theme()], ["backup", lambda x: app.show_backup_dialog()], ["cog", lambda x: app.show_settings()]]
+            
+        MDBottomNavigation:
+            panel_color: app.theme_cls.primary_color
+            
+            MDBottomNavigationItem:
+                name: 'screen 1'
+                text: 'Detection'
+                icon: 'face-recognition'
+                
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    
+                    # Left panel
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        size_hint_x: 0.3
+                        padding: dp(8)
+                        spacing: dp(8)
+                        md_bg_color: app.theme_cls.bg_darkest if app.theme_cls.theme_style == "Dark" else app.theme_cls.bg_light
+                        
+                        MDRaisedButton:
+                            id: camera_button
+                            text: "Start Camera"
+                            on_release: app.toggle_camera()
+                            size_hint_x: 1
+                            
+                        MDRaisedButton:
+                            id: register_button
+                            text: "Register Face"
+                            on_release: app.register_face()
+                            size_hint_x: 1
+                            
+                        MDLabel:
+                            text: "Registered Faces"
+                            halign: "center"
+                            theme_text_color: "Primary"
+                            
+                        ScrollView:
+                            MDList:
+                                id: faces_list
+                    
+                    # Right panel
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        padding: dp(8)
+                        
+                        # Camera preview with border
+                        MDCard:
+                            orientation: 'vertical'
+                            padding: dp(2)
+                            size_hint_y: 0.8
+                            
+                            Image:
+                                id: camera_view
+                                allow_stretch: True
+                                keep_ratio: True
+                        
+                        # Stats bar
+                        MDBoxLayout:
+                            orientation: 'horizontal'
+                            size_hint_y: 0.2
+                            spacing: dp(8)
+                            padding: dp(8)
+                            md_bg_color: app.theme_cls.bg_dark if app.theme_cls.theme_style == "Dark" else app.theme_cls.bg_normal
+                            
+                            MDChip:
+                                id: detection_count
+                                text: "Detections: 0"
+                                icon_right: "face-recognition"
+                                md_bg_color: app.theme_cls.primary_light
+                            
+                            MDChip:
+                                id: recognition_count
+                                text: "Recognized: 0"
+                                icon_right: "check-circle"
+                                md_bg_color: app.theme_cls.primary_light
+            
+            MDBottomNavigationItem:
+                name: 'screen 2'
+                text: 'Gallery'
+                icon: 'image-multiple'
+                
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    padding: dp(16)
+                    spacing: dp(16)
+                    
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        size_hint_y: None
+                        height: dp(56)
+                        spacing: dp(8)
+                        adaptive_height: True
+                        pos_hint: {"center_x": .5}
+                        
+                        MDRaisedButton:
+                            text: "Import Image"
+                            on_release: app.show_file_manager()
+                        
+                        MDRaisedButton:
+                            text: "Take Photo"
+                            on_release: app.capture_photo()
+                    
+                    ScrollView:
+                        MDGridLayout:
+                            id: gallery_grid
+                            cols: 3
+                            spacing: dp(8)
+                            padding: dp(8)
+                            adaptive_height: True
+            
+            MDBottomNavigationItem:
+                name: 'screen 3'
+                text: 'Stats'
+                icon: 'chart-box'
+                
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    padding: dp(16)
+                    spacing: dp(16)
+                    
+                    MDLabel:
+                        text: "Detection Statistics"
+                        halign: "center"
+                        font_style: "H5"
+                        theme_text_color: "Primary"
+                        
+                    MDGridLayout:
+                        cols: 2
+                        spacing: dp(16)
+                        padding: dp(16)
+                        
+                        # Total Detections Card
+                        MDCard:
+                            orientation: "vertical"
+                            padding: dp(16)
+                            size_hint_y: None
+                            height: dp(120)
+                            
+                            MDLabel:
+                                text: "Total Detections"
+                                halign: "center"
+                                theme_text_color: "Secondary"
+                                
+                            MDLabel:
+                                id: total_detections
+                                text: "0"
+                                halign: "center"
+                                font_style: "H4"
+                                theme_text_color: "Primary"
+                        
+                        # Recognition Rate Card
+                        MDCard:
+                            orientation: "vertical"
+                            padding: dp(16)
+                            size_hint_y: None
+                            height: dp(120)
+                            
+                            MDLabel:
+                                text: "Recognition Rate"
+                                halign: "center"
+                                theme_text_color: "Secondary"
+                                
+                            MDLabel:
+                                id: recognition_rate
+                                text: "0%"
+                                halign: "center"
+                                font_style: "H4"
+                                theme_text_color: "Primary"
+                        
+                        # Registered Faces Card
+                        MDCard:
+                            orientation: "vertical"
+                            padding: dp(16)
+                            size_hint_y: None
+                            height: dp(120)
+                            
+                            MDLabel:
+                                text: "Registered Faces"
+                                halign: "center"
+                                theme_text_color: "Secondary"
+                                
+                            MDLabel:
+                                id: registered_faces
+                                text: "0"
+                                halign: "center"
+                                font_style: "H4"
+                                theme_text_color: "Primary"
+                        
+                        # Last Detection Card
+                        MDCard:
+                            orientation: "vertical"
+                            padding: dp(16)
+                            size_hint_y: None
+                            height: dp(120)
+                            
+                            MDLabel:
+                                text: "Last Detection"
+                                halign: "center"
+                                theme_text_color: "Secondary"
+                                
+                            MDLabel:
+                                id: last_detection
+                                text: "Never"
+                                halign: "center"
+                                theme_text_color: "Primary"
